@@ -4,6 +4,11 @@
   copy: src=../../../domain.yml dest=/etc/domain.yml force=yes
   become: yes
 
+# Copia le password in locale sul server.
+- name: Copia le password.
+  copy: src=../../../password.yml dest=/etc/password.yml force=yes
+  become: yes
+
 - name: Creo la cartella per le configurazioni di Ansible
   file: path=/etc/ansible/facts.d state=directory owner=root mode=0755
   become: yes
@@ -16,6 +21,10 @@
 
 - name: Utilizzo un piccolo wrapper per passare come fatti informazioni di dominio
   copy: src=domain.fact dest=/etc/ansible/facts.d/domain.fact mode=0755 owner=root
+  become: yes
+
+- name: Utilizzo un piccolo wrapper per passare come fatti le password
+  copy: src=password.fact dest=/etc/ansible/facts.d/password.fact mode=0755 owner=root
   become: yes
 
 - name: Rileggo i fatti per essere sicuri che vengano utilizzati
